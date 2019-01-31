@@ -34,7 +34,7 @@ public class MongoStudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void updateStudent(Student student) { 
+    public void updateStudent(Student student) {
 
     }
 
