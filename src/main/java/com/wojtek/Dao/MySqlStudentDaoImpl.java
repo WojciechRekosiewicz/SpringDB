@@ -53,7 +53,11 @@ public class MySqlStudentDaoImpl implements StudentDao {
 
     @Override
     public void updateStudent(Student student) {
-
+        final String sql = "UPDATE name = ?, course = ? WHERE id = ?";
+        int id = student.getId();
+        final String name = student.getName();
+        final String course = student.getCourse();
+        jdbcTemplate.update(sql, new Object[]{name, course, id});
     }
 
     @Override
