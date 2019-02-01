@@ -47,7 +47,8 @@ public class MySqlStudentDaoImpl implements StudentDao {
 
     @Override
     public void removeStudentById(int id) {
-
+        final String sql = "DELETE FROM students WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 
     @Override
