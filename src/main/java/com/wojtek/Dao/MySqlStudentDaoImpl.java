@@ -21,22 +21,28 @@ public class MySqlStudentDaoImpl implements StudentDao {
     @Override
     public Collection<Student> getAllStudents() {
 //        SELECT column_name(s) FROM table_name
-        final List<Student> students = jdbcTemplate.query("SELECT id, name, course FROM students", new RowMapper<Student>() {
-            @Override
-            public Student mapRow(ResultSet resultSet, int i) throws SQLException {
-                Student student = new Student();
-                student.setId(resultSet.getInt("id"));
-                student.setName(resultSet.getString("name"));
-                student.setCourse(resultSet.getString("course"));
-                return student;
-            }
-        });
+        final String sql = "SELECT id, name, course FROM students";
+        List<Student> students = jdbcTemplate.query(sql, new StudentRowMapper());
         return students;
     }
 
     @Override
     public Student getStudentById(int id) {
-        return null;
+        final String sql = "SELECT id, name, course FROM students WHERE id = ?";
+        Student student = jdbcTemplate.queryForObject(sql, new StudentRowMapper(), id);
+        return student;
+    }
+
+    private static class StudentRowMapper implements RowMapper<Student> {
+
+        @Override
+        public Student mapRow(ResultSet resultSet, int i) throws SQLException {
+            Student student = new Student();
+            student.setId(resultSet.getInt("id"));
+            student.setName(resultSet.getString("name"));
+            student.setCourse(resultSet.getString("course"));
+            return student;
+        }
     }
 
     @Override
